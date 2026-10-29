@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>List Students from table</title>
+</head>
+<body>
+
+    <h1>List Students from table</h1>
+
+    <!-- 1. 新增學生表單 (新增了身高 height) -->
+    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 15px;">
+        <h3>新增學生</h3>
+        <form action="/students/add/template" method="POST">
+            學號：<input type="text" name="stuid" required>
+            姓名：<input type="text" name="name" required>
+            身高：<input type="text" name="height">
+            <button type="submit">新增</button>
+        </form>
+    </div>
+
+    <!-- 2. 學生列表 (呈現流水號: Edit 學號 姓名 刪除) -->
+    <div>
+        <p>流水號 學號 姓名</p>
+        {% for student in students %}
+        <div style="margin-bottom: 5px;">
+            <!-- 流水號 -->
+            {{ loop.index }}: 
+            
+            <!-- Edit 編輯連結 (跳轉至編輯頁面) -->
+            <a href="/students/edit/template/{{ student.stuid }}">Edit</a>
+            
+            <!-- 學號與姓名 -->
+            {{ student.stuid }} {{ student.name }}
+            
+            <!-- 刪除按鈕 -->
+            <form action="/students/delete/template/{{ student.stuid }}" method="POST" style="display:inline;" onsubmit="return confirm('確定刪除？');">
+                <button type="submit">刪除</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
